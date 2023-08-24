@@ -1,3 +1,24 @@
 [build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "aaio"
+version = "1.0.0"
+description = "Async AAIO api wrapper for python"
+readme = "README.md"
+authors = [{ name = "kewldan", email = "kewldanil1@gmail.com" }]
+license = { file = "LICENSE" }
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+]
+keywords = ["payments", "api"]
+requires-python = ">=3.4"
+dependencies = [
+  "aiohttp",
+]
+
+[project.urls]
+Homepage = "https://github.com/kewldan/AAIO"
