@@ -30,6 +30,10 @@ revised in future). Please write about all problems related to the library in is
 
 * aiohttp - `pip install aiohttp` [Official website](https://docs.aiohttp.org/en/stable/)
 
+### Contact
+E-Mail - kewldanil1@gmail.com
+Telegram - [@kwld](https://t.me/kewldan)
+
 ### Usage
 
 1. Get on-hold balance of user
