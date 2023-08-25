@@ -16,12 +16,15 @@ returns a reference (str) and does not create any I/O bound load. A new session 
 revised in future). Please write about all problems related to the library in issues. API is up-to-date as of *25 August
 2023*.
 
-### Download
+### Install
 
-* `pip install aaio`
+* Install into pip: `pip install aaio`
+* Download sources - `git clone https://github.com/kewldan/AAIO`
+
+### Links
+
 * Website - [PyPi](https://pypi.org/project/aaio/)
 * Github - [github](https://github.com/kewldan/AAIO)
-* Sources - `git clone https://github.com/kewldan/AAIO`
 
 ### Dependencies
 
