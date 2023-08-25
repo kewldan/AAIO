@@ -1,9 +1,3 @@
-import hashlib
-from urllib.parse import urlencode
-
-import aiohttp
-
-
 class AAIO:
     """
     AAIO client for API interaction
@@ -38,6 +32,9 @@ class AAIO:
         :param currency: Currency
         :return: SHA-256 sign
         """
+
+        import hashlib
+
         params = f':'.join([
             self._merchant_id,
             str(amount),
@@ -67,6 +64,8 @@ class AAIO:
         :param language: Page language (Optional)
         :return: Payment URL
         """
+        from urllib.parse import urlencode
+
         if not currency:
             currency = self._default_currency
         params = {
@@ -184,6 +183,8 @@ class AAIO:
         :param params: Request params (Optional)
         :return: Response JSON
         """
+        import aiohttp
+
         if params is None:
             params = {}
         headers = {
