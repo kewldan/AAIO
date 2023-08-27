@@ -1,8 +1,0 @@
-site_name: AAIO API
-
-plugins:
-  - mkdocstrings
-
-theme:
-  name: "material"
-  nav_style: dark

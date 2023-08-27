@@ -17,11 +17,13 @@ class AAIO:
             default_currency: If not set - RUB, but can be overwritten for each request (Optional)
             base_url: Base URL for requests (Optional)
         """
+        import aiohttp
+
         self._default_currency = default_currency
         self._merchant_id = merchant_id
         self._api_key = api_key
         self._secret = secret
-        self._base_url = base_url
+        self.session = aiohttp.ClientSession(base_url)
 
     def __generate_sign(self, amount: float, order_id: str, currency: str) -> str:
         """
@@ -88,7 +90,7 @@ class AAIO:
             'referal': referral,
             'us_key': us_key
         }
-        return f'{self._base_url}/merchant/pay?' + urlencode(params)
+        return f'{self.session.base_url}/merchant/pay?' + urlencode(params)
 
     async def get_pay_info(self, order_id: str) -> dict:
         """
@@ -214,8 +216,6 @@ class AAIO:
 
         """
 
-        import aiohttp
-
         if params is None:
             params = {}
         headers = {
@@ -223,6 +223,11 @@ class AAIO:
             'X-Api-Key': self._api_key
         }
 
-        async with aiohttp.ClientSession() as session:
-            async with session.post(f'{self._base_url}{uri}', headers=headers, data=params) as r:
-                return await r.json()
+        async with self.session.post(uri, headers=headers, data=params) as r:
+            return await r.json()
+
+    async def get_session(self):
+        return self.session
+
+    async def close(self):
+        await self.session.close()
