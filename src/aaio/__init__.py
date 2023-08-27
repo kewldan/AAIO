@@ -1,6 +1,10 @@
+import asyncio
+
+
 class AAIO:
     """
     AAIO client for API interaction
+    Session will be automatically closed
 
     API for https://aaio.io/
     """
@@ -229,5 +233,6 @@ class AAIO:
     async def get_session(self):
         return self.session
 
-    async def close(self):
-        await self.session.close()
+    def __del__(self):
+        loop = asyncio.get_event_loop()
+        loop.create_task(self.session.close())
