@@ -39,7 +39,7 @@ class AAIO:
             order_id: Your order ID
             currency: Currency
 
-        Returns:SHA-256 sign
+        Returns: SHA-256 sign
 
         """
 
@@ -91,12 +91,12 @@ class AAIO:
             'lang': language,
             'method': method,
             'email': email,
-            'referal': referral,
+            'referral': referral,
             'us_key': us_key
         }
-        return f'{self.session.base_url}/merchant/pay?' + urlencode(params)
+        return f'{self.session.base_url}/merchant/pay?' + urlencode({k: v for k, v in params.items() if v is not None})
 
-    async def get_pay_info(self, order_id: str) -> dict:
+    async def get_payment_info(self, order_id: str) -> dict:
         """
         Creates a request for get payment information
         See https://wiki.aaio.io/api/informaciya-o-zakaze
@@ -151,7 +151,7 @@ class AAIO:
         }
         return await self.__create_request('/api/create-payoff', params)
 
-    async def info_payoff(self, payoff_id: str = None, aaio_id: str = None) -> dict:
+    async def get_payoff_info(self, payoff_id: str = None, aaio_id: str = None) -> dict:
         """
         Creates a request for get payoff information
         See https://wiki.aaio.io/api/informaciya-o-zayavke-na-vyvod-sredstv
@@ -172,7 +172,7 @@ class AAIO:
         }
         return await self.__create_request('/api/info-payoff', params)
 
-    async def rates_payoff(self) -> dict:
+    async def get_rates_payoff(self) -> dict:
         """
         Creates a request for get rates for payoff
         See https://wiki.aaio.io/api/kurs-valyut-pri-vyvode-sredstv
@@ -183,7 +183,7 @@ class AAIO:
 
         return await self.__create_request('/api/rates-payoff')
 
-    async def methods_payoff(self) -> dict:
+    async def get_payoff_methods(self) -> dict:
         """
         Creates a request for get available payoff methods
         See https://wiki.aaio.io/api/dostupnye-metody-dlya-vyvoda-sredstv
@@ -194,7 +194,7 @@ class AAIO:
 
         return await self.__create_request('/api/methods-payoff')
 
-    async def methods_pay(self) -> dict:
+    async def get_payment_methods(self) -> dict:
         """
         Creates a request for get available payment methods
         See https://wiki.aaio.io/api/dostupnye-metody-dlya-sozdaniya-zakaza
@@ -227,7 +227,8 @@ class AAIO:
             'X-Api-Key': self._api_key
         }
 
-        async with self.session.post(uri, headers=headers, data=params) as r:
+        async with self.session.post(uri, headers=headers,
+                                     data={k: v for k, v in params.items() if v is not None}) as r:
             return await r.json()
 
     async def get_session(self):
