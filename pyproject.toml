@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "aaio"
-version = "1.0.8"
+version = "1.0.9"
 description = "Async AAIO api wrapper for python"
 readme = "README.md"
 authors = [{ name = "kewldan", email = "kewldanil1@gmail.com" }]
@@ -17,7 +17,7 @@ classifiers = [
 keywords = ["payments", "api"]
 requires-python = ">=3.6"
 dependencies = [
-  "aiohttp",
+  "aiohttp", "pydantic"
 ]
 
 [project.urls]
