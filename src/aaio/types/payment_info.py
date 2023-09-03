@@ -15,7 +15,7 @@ class PaymentInfo(AAIOResponse):
     profit: Optional[float] = None
     commission: Optional[float] = None
     commission_client: Optional[float] = None
-    commission_type: Optional[Literal[0, 1, 2]] = None
+    commission_type: Optional[str] = None
     email: Optional[str] = None
     status: Optional[Literal['in_process', 'success', 'expired', 'hold']] = None
     date: Optional[str] = None
