@@ -4,6 +4,13 @@
 	<img src="https://aaio.io/assets/svg/banners/big/dark-2.svg" title="Aaio - Сервис по приему онлайн платежей">
 </a>
 
+[![kewldan - AAIO](https://img.shields.io/static/v1?label=kewldan&message=AAIO&color=blue&logo=github)](https://github.com/kewldan/AAIO "Go to GitHub repo")
+[![GitHub release](https://img.shields.io/github/release/kewldan/AAIO?include_prereleases=&sort=semver&color=blue)](https://github.com/kewldan/AAIO/releases/)
+[![License](https://img.shields.io/badge/License-MIT-blue)](#license)
+
+[![Upload Python Package](https://github.com/kewldan/AAIO/actions/workflows/python-publish.yml/badge.svg)](https://github.com/kewldan/AAIO/actions/workflows/python-publish.yml)
+[![issues - AAIO](https://img.shields.io/github/issues/kewldan/AAIO)](https://github.com/kewldan/AAIO/issues)
+
 [AAIO Official documentation](https://wiki.aaio.io/)
 
 ## About
@@ -87,3 +94,7 @@ asyncio.run(main())
 ## Contact
 E-Mail - kewldanil1@gmail.com
 Telegram - [@kewldan](https://t.me/kewldan)
+
+## License
+
+Released under [MIT](/LICENSE) by [@kewldan](https://github.com/kewldan).
