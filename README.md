@@ -12,11 +12,11 @@ This library is a wrapper for the https://aaio.io API **from enthusiasts**. All 
 **explicitly** defined. The library does **not handle any exceptions**, so be careful. Methods that create requests to aaio.io
 return a pydantic's models for each response. Please write about all problems related to the library to [issues](https://github.com/kewldan/AAIO/issues)
 
-API is up-to-date as of *03 September 2023*.
+API is up-to-date as of *17 September 2023*.
 
 * PyPl - https://pypi.org/project/aaio/
 * Github - https://github.com/kewldan/AAIO
-* Requirements: Python >= 3.6
+* Requirements: Python >= 3.7
 * Added to [AAIO SDKs](https://wiki.aaio.io/priem-platezhei/gotovye-cms-moduli-i-sdk/python-3-sdk)
 
 ### Features
