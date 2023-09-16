@@ -54,14 +54,16 @@ API is up-to-date as of *17 September 2023*.
 
 ### Get user balance
 
+> #### Note that the `AAIO` constructor is called in the async function! [Problem related to calling in sync function](https://stackoverflow.com/questions/52232177/runtimeerror-timeout-context-manager-should-be-used-inside-a-task)
+
 ```python
 import asyncio
 
-import aaio
+from aaio import AAIO
 
 
 async def main():
-    client = aaio.AAIO('MERCHANT ID', 'SECRET KEY', 'API KEY')
+    client = AAIO('MERCHANT ID', 'SECRET KEY', 'API KEY')
     balances = await client.get_balances()
     print(balances)  # type='success' code=None message=None balance=625.85 referral=172.96 hold=0.0
 
@@ -72,13 +74,20 @@ asyncio.run(main())
 ### Create payment URL for customer
 
 ```python
-import aaio
+import asyncio
 
-client = aaio.AAIO('MERCHANT ID', 'SECRET KEY', 'API KEY')
-payment_url = client.create_payment(100, 'my_order_id', 'My order description', 'qiwi', 'support@aaio.io',
-                                    'referral code', currency='USD',
-                                    language='en')
-print(payment_url)  # Prints payment url for customer
+from aaio import AAIO
+
+
+async def main():
+  client = AAIO('MERCHANT ID', 'SECRET KEY', 'API KEY')
+  payment_url = client.create_payment(100, 'my_order_id', 'My order description', 'qiwi', 'support@aaio.io',
+                                      'referral code', currency='USD',
+                                      language='en')
+  print(payment_url)  # Prints payment url for customer
+
+
+asyncio.run(main())
 ```
 
 ### Create payoff
@@ -86,17 +95,19 @@ print(payment_url)  # Prints payment url for customer
 ```python
 import asyncio
 
-import aaio
+from aaio import AAIO
 
 
 async def main():
-    client = aaio.AAIO('MERCHANT ID', 'SECRET KEY', 'API KEY')
-    payoff = await client.create_payoff('qiwi', 100.35, '79998887766', 'my_payoff_id')
-    print(payoff.status)  # in_progress
+  client = AAIO('MERCHANT ID', 'SECRET KEY', 'API KEY')
+  payoff = await client.create_payoff('qiwi', 100.35, '79998887766', 'my_payoff_id')
+  print(payoff.status)  # in_progress
 
 
 asyncio.run(main())
 ```
+
+> #### The session is closed automatically when the object is deleted (when `__del__()` is called)
 
 ## Contact
 
