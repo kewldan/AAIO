@@ -2,6 +2,7 @@ import asyncio
 from urllib.parse import urlencode
 
 import aiohttp
+import hashlib
 
 from aaio.types.balance import Balance
 from aaio.types.create_payoff import CreatePayoff
@@ -53,8 +54,6 @@ class AAIO:
 
         """
 
-        import hashlib
-
         params = f':'.join([
             self._merchant_id,
             str(amount),
@@ -103,6 +102,7 @@ class AAIO:
             'referral': referral,
             'us_key': us_key
         }
+
         return f'{self.session.base_url}/merchant/pay?' + urlencode({k: v for k, v in params.items() if v is not None})
 
     async def get_payment_info(self, order_id: str) -> PaymentInfo:
@@ -179,6 +179,7 @@ class AAIO:
             'my_id': payoff_id,
             'id': aaio_id
         }
+
         return PayoffInfo(**await self.__create_request('/api/info-payoff', params))
 
     async def get_payoff_rates(self) -> PayoffRates:
@@ -215,6 +216,7 @@ class AAIO:
         params = {
             'merchant_id': self._merchant_id
         }
+
         return PaymentMethods(**await self.__create_request('/api/methods-pay', params))
 
     async def __create_request(self, uri: str, params: dict = None):
@@ -231,6 +233,7 @@ class AAIO:
 
         if params is None:
             params = {}
+
         headers = {
             'Accept': 'application/json',
             'X-Api-Key': self._api_key
