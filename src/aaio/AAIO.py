@@ -103,7 +103,7 @@ class AAIO:
             'us_key': us_key
         }
 
-        return f'{self.session.base_url}/merchant/pay?' + urlencode({k: v for k, v in params.items() if v is not None})
+        return f'https://aaio.io/merchant/pay?' + urlencode({k: v for k, v in params.items() if v is not None})
 
     async def get_payment_info(self, order_id: str) -> PaymentInfo:
         """
