@@ -21,4 +21,4 @@ class PaymentInfo(AAIOResponse):
     date: Optional[str] = None
     expired_date: Optional[str] = None
     complete_date: Optional[str] = None
-    us_vars: Optional[dict[str, str]] = None
+    us_vars: Optional[list[str]] = None
