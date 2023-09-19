@@ -1,9 +1,7 @@
-from typing import Optional
-
-from aaio.types.response import AAIOResponse
+from pydantic import BaseModel
 
 
-class Balance(AAIOResponse):
-    balance: Optional[float] = None
-    referral: Optional[float] = None
-    hold: Optional[float] = None
+class Balance(BaseModel):
+    balance: float
+    referral: float
+    hold: float

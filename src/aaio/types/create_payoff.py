@@ -1,18 +1,18 @@
-from typing import Literal, Optional
+from typing import Literal
 
-from aaio.types.response import AAIOResponse
+from pydantic import BaseModel
 
 
-class CreatePayoff(AAIOResponse):
-    id: Optional[str] = None
-    my_id: Optional[str] = None
-    method: Optional[str] = None
-    wallet: Optional[str] = None
-    amount: Optional[float] = None
-    amount_in_currency: Optional[float] = None
-    amount_currency: Optional[str] = None
-    amount_rate: Optional[float] = None
-    amount_down: Optional[float] = None
-    commission: Optional[float] = None
-    commission_type: Optional[int] = None
-    status: Optional[Literal['in_process', 'cancel', 'success']] = None
+class CreatePayoff(BaseModel):
+    id: str
+    my_id: str
+    method: str
+    wallet: str
+    amount: float
+    amount_in_currency: float
+    amount_currency: str
+    amount_rate: float
+    amount_down: float
+    commission: float
+    commission_type: int
+    status: Literal['in_process', 'cancel', 'success']

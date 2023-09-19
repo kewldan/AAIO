@@ -1,8 +1,4 @@
-from typing import Optional
-
 from pydantic import BaseModel
-
-from aaio.types.response import AAIOResponse
 
 
 class PaymentMethodAmounts(BaseModel):
@@ -19,5 +15,5 @@ class PaymentMethod(BaseModel):
     commission_type: float
 
 
-class PaymentMethods(AAIOResponse):
-    list: Optional[dict[str, PaymentMethod]] = None
+class PaymentMethods(BaseModel):
+    list: dict[str, PaymentMethod]

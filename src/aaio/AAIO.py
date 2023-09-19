@@ -1,9 +1,10 @@
 import asyncio
+import hashlib
 from urllib.parse import urlencode
 
 import aiohttp
-import hashlib
 
+from aaio.exceptions.aaio_bad_request import AAIOBadRequest
 from aaio.types.balance import Balance
 from aaio.types.create_payoff import CreatePayoff
 from aaio.types.payment_info import PaymentInfo
@@ -122,7 +123,9 @@ class AAIO:
             'order_id': order_id
         }
 
-        return PaymentInfo(**await self.__create_request('/api/info-pay', params))
+        response = await self.__create_request('/api/info-pay', params)
+
+        return PaymentInfo(**response)
 
     async def get_balances(self) -> Balance:
         """
@@ -132,7 +135,9 @@ class AAIO:
         Returns: Response JSON
         """
 
-        return Balance(**await self.__create_request('/api/balance'))
+        response = await self.__create_request('/api/balance')
+
+        return Balance(**response)
 
     async def create_payoff(self, method: str, amount: float, wallet: str, payoff_id: str = '',
                             commission_type: int = 0) -> CreatePayoff:
@@ -158,7 +163,10 @@ class AAIO:
             'wallet': wallet,
             'commission_type': commission_type
         }
-        return CreatePayoff(**await self.__create_request('/api/create-payoff', params))
+
+        response = await self.__create_request('/api/create-payoff', params)
+
+        return CreatePayoff(**response)
 
     async def get_payoff_info(self, payoff_id: str = None, aaio_id: str = None) -> PayoffInfo:
         """
@@ -180,7 +188,9 @@ class AAIO:
             'id': aaio_id
         }
 
-        return PayoffInfo(**await self.__create_request('/api/info-payoff', params))
+        response = await self.__create_request('/api/info-payoff', params)
+
+        return PayoffInfo(**response)
 
     async def get_payoff_rates(self) -> PayoffRates:
         """
@@ -191,7 +201,9 @@ class AAIO:
 
         """
 
-        return PayoffRates(**await self.__create_request('/api/rates-payoff'))
+        response = await self.__create_request('/api/rates-payoff')
+
+        return PayoffRates(**response)
 
     async def get_payoff_methods(self) -> PayoffMethods:
         """
@@ -202,7 +214,9 @@ class AAIO:
 
         """
 
-        return PayoffMethods(**await self.__create_request('/api/methods-payoff'))
+        response = await self.__create_request('/api/methods-payoff')
+
+        return PayoffMethods(**response)
 
     async def get_payment_methods(self) -> PaymentMethods:
         """
@@ -217,9 +231,11 @@ class AAIO:
             'merchant_id': self._merchant_id
         }
 
-        return PaymentMethods(**await self.__create_request('/api/methods-pay', params))
+        response = await self.__create_request('/api/methods-pay', params)
 
-    async def __create_request(self, uri: str, params: dict = None):
+        return PaymentMethods(**response)
+
+    async def __create_request(self, uri: str, params: dict = None) -> dict | None:
         """
         Creates a request to base URL and adds URI
 
@@ -241,11 +257,16 @@ class AAIO:
 
         async with self.session.post(uri, headers=headers,
                                      data={k: v for k, v in params.items() if v is not None}) as r:
-            return await r.json()
+            response = await r.json()
+            if response['type'] == 'success':
+                return response
+            else:
+                raise AAIOBadRequest(response['code'], response['message'])
 
     def get_session(self) -> aiohttp.ClientSession:
         return self.session
 
-    def __del__(self):
-        loop = asyncio.get_event_loop()
-        loop.create_task(self.session.close())
+    def __del__(self) -> None:
+        if not self.session.closed:
+            loop = asyncio.get_event_loop()
+            loop.create_task(self.session.close())

@@ -6,3 +6,4 @@ from .types.payment_methods import PaymentMethods, PaymentMethod, PaymentMethodA
 from .types.payoff_info import PayoffInfo
 from .types.payoff_methods import PayoffMethods, PayoffMethod
 from .types.payoff_rates import PayoffRates
+from .exceptions.aaio_bad_request import AAIOBadRequest

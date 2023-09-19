@@ -1,10 +1,8 @@
-from typing import Optional
-
-from aaio.types.response import AAIOResponse
+from pydantic import BaseModel
 
 
-class PayoffRates(AAIOResponse):
-    USD: Optional[float] = None
-    UAH: Optional[float] = None
-    USDT: Optional[float] = None
-    BTC: Optional[float] = None
+class PayoffRates(BaseModel):
+    USD: float
+    UAH: float
+    USDT: float
+    BTC: float
