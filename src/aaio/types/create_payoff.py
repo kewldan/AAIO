@@ -1,4 +1,4 @@
-from typing import Literal
+from typing import Literal, Optional
 
 from pydantic import BaseModel
 
@@ -11,7 +11,7 @@ class CreatePayoff(BaseModel):
     amount: float
     amount_in_currency: float
     amount_currency: str
-    amount_rate: float
+    amount_rate: Optional[float] = None
     amount_down: float
     commission: float
     commission_type: int
