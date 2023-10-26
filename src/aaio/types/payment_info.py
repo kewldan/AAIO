@@ -22,3 +22,15 @@ class PaymentInfo(BaseModel):
     expired_date: str
     complete_date: str
     us_vars: list[str]
+
+    def is_success(self) -> bool:
+        return self.status == 'success'
+
+    def is_in_process(self) -> bool:
+        return self.status == 'in_process'
+
+    def is_on_hold(self) -> bool:
+        return self.status == 'hold'
+
+    def is_expired(self) -> bool:
+        return self.status == 'expired'

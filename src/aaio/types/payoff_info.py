@@ -16,3 +16,12 @@ class PayoffInfo(BaseModel):
     cancel_message: Optional[str] = None
     date: str
     complete_date: Optional[str] = None
+
+    def is_success(self) -> bool:
+        return self.status == 'success'
+
+    def is_in_process(self) -> bool:
+        return self.status == 'in_process'
+
+    def is_canceled(self) -> bool:
+        return self.status == 'cancel'
