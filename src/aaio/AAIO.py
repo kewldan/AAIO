@@ -1,4 +1,3 @@
-import asyncio
 import hashlib
 from urllib.parse import urlencode
 
@@ -39,7 +38,7 @@ class AAIO:
         self._merchant_id = merchant_id
         self._api_key = api_key
         self._secret = secret
-        self.session = aiohttp.ClientSession(base_url)
+        self._base_url = base_url
 
     def __generate_sign(self, amount: float, order_id: str, currency: str) -> str:
         """
@@ -106,6 +105,11 @@ class AAIO:
 
         return f'https://aaio.io/merchant/pay?' + urlencode({k: v for k, v in params.items() if v is not None})
 
+    async def get_ips(self) -> list[str]:
+        response = await self.__create_request('/api/public/ips')
+
+        return response['list']
+
     async def get_payment_info(self, order_id: str) -> PaymentInfo:
         """
         Creates a request for get payment information
@@ -114,7 +118,7 @@ class AAIO:
         Args:
             order_id: Your order ID
 
-        Returns: Response JSON
+        Returns: Model from response JSON
 
         """
 
@@ -132,7 +136,7 @@ class AAIO:
         Creates a request for get balances of user
         See https://wiki.aaio.io/api/poluchenie-balansa
 
-        Returns: Response JSON
+        Returns: Model from response JSON
         """
 
         response = await self.__create_request('/api/balance')
@@ -152,7 +156,7 @@ class AAIO:
             payoff_id: Your payoff ID (Optional)
             commission_type: Commission type, default - 0 (Optional)
 
-        Returns: Response JSON
+        Returns: Model from response JSON
 
         """
 
@@ -179,7 +183,7 @@ class AAIO:
             payoff_id: Your payoff ID (Optional)
             aaio_id: AAIO payoff ID (Optional)
 
-        Returns: Response JSON
+        Returns: Model from response JSON
 
         """
 
@@ -197,7 +201,7 @@ class AAIO:
         Creates a request for get rates for payoff
         See https://wiki.aaio.io/api/kurs-valyut-pri-vyvode-sredstv
 
-        Returns: Response JSON
+        Returns: Model from response JSON
 
         """
 
@@ -210,7 +214,7 @@ class AAIO:
         Creates a request for get available payoff methods
         See https://wiki.aaio.io/api/dostupnye-metody-dlya-vyvoda-sredstv
 
-        Returns: Response JSON
+        Returns: Model from response JSON
 
         """
 
@@ -223,7 +227,7 @@ class AAIO:
         Creates a request for get available payment methods
         See https://wiki.aaio.io/api/dostupnye-metody-dlya-sozdaniya-zakaza
 
-        Returns: Response JSON
+        Returns: Model from response JSON
 
         """
 
@@ -243,7 +247,7 @@ class AAIO:
             uri: URI
             params: Request params (Optional)
 
-        Returns: Response JSON
+        Returns: Model from response JSON
 
         """
 
@@ -255,18 +259,11 @@ class AAIO:
             'X-Api-Key': self._api_key
         }
 
-        async with self.session.post(uri, headers=headers,
-                                     data={k: v for k, v in params.items() if v is not None}) as r:
-            response = await r.json()
-            if response['type'] == 'success':
-                return response
-            else:
-                raise AAIOBadRequest(response['code'], response['message'])
-
-    def get_session(self) -> aiohttp.ClientSession:
-        return self.session
-
-    def __del__(self) -> None:
-        if not self.session.closed:
-            loop = asyncio.get_event_loop()
-            loop.create_task(self.session.close())
+        async with aiohttp.ClientSession(self._base_url) as session:
+            async with session.post(uri, headers=headers,
+                                    data={k: v for k, v in params.items() if v is not None}) as r:
+                response = await r.json()
+                if response['type'] == 'success':
+                    return response
+                else:
+                    raise AAIOBadRequest(response['code'], response['message'])

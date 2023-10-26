@@ -25,7 +25,7 @@ aaio.io
 return a pydantic's models for each response. Please write about all problems related to the library
 to [issues](https://github.com/kewldan/AAIO/issues)
 
-API is up-to-date as of *01 October 2023*.
+API is up-to-date as of *27 October 2023*.
 
 * PyPl - https://pypi.org/project/aaio/
 * Github - https://github.com/kewldan/AAIO
@@ -40,8 +40,7 @@ API is up-to-date as of *01 October 2023*.
 * **All methods** for working with API are implemented
 * The library returns strictly typed for responses from APIs
 * For each method, **docstrings** are used
-* The library does not handle {type: error} responses, so you can do it **yourself**, which gives it **more flexibility
-  **
+* The library handle {type: error} responses and throws AAIOBadRequest exception
 * Our library was the **first** to be added to the **official** AAIO wiki
 * **Modern**, strict code for Python 3.7
 
