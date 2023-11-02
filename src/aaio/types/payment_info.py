@@ -1,4 +1,4 @@
-from typing import Literal
+from typing import Literal, Optional
 
 from pydantic import BaseModel
 
@@ -12,15 +12,15 @@ class PaymentInfo(BaseModel):
     method: str
     amount: float
     currency: Literal['RUB', 'UAH', 'EUR', 'USD']
-    profit: float
-    commission: float
-    commission_client: float
-    commission_type: str
-    email: str
+    profit: Optional[float] = None
+    commission: Optional[float] = None
+    commission_client: Optional[float] = None
+    commission_type: Optional[str] = None
+    email: Optional[str] = None
     status: Literal['in_process', 'success', 'expired', 'hold']
     date: str
     expired_date: str
-    complete_date: str
+    complete_date: Optional[str] = None
     us_vars: list[str]
 
     def is_success(self) -> bool:

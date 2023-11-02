@@ -20,12 +20,12 @@
 ## About
 
 This library is a wrapper for the https://aaio.io API **from enthusiasts**. All methods are described and all types are
-**explicitly** defined. The library does **not handle any exceptions**, so be careful. Methods that create requests to
+**explicitly** defined. Methods that create requests to
 aaio.io
 return a pydantic's models for each response. Please write about all problems related to the library
 to [issues](https://github.com/kewldan/AAIO/issues)
 
-API is up-to-date as of *29 October 2023*.
+API is up-to-date as of *02 November 2023*.
 
 * PyPl - https://pypi.org/project/aaio/
 * Github - https://github.com/kewldan/AAIO
@@ -36,7 +36,6 @@ API is up-to-date as of *29 October 2023*.
 ### Features
 
 * It's completely **asynchronous**
-* Uses single aiohttp session to improve **performance**
 * You can use **multiple** clients to work with **multiple** users or shops
 * **All methods** for working with API are implemented
 * The library returns strictly typed for responses from APIs
@@ -53,8 +52,6 @@ API is up-to-date as of *29 October 2023*.
 ## Getting Started
 
 ### Get user balance
-
-> #### Note that the `AAIO` constructor is called in the async function! [Problem related to calling in sync function](https://stackoverflow.com/questions/52232177/runtimeerror-timeout-context-manager-should-be-used-inside-a-task)
 
 ```python
 import asyncio
@@ -106,8 +103,6 @@ async def main():
 
 asyncio.run(main())
 ```
-
-> #### The session is closed automatically when the object is deleted (when `__del__()` is called)
 
 ## Contact
 
