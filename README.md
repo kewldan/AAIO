@@ -25,11 +25,12 @@ aaio.io
 return a pydantic's models for each response. Please write about all problems related to the library
 to [issues](https://github.com/kewldan/AAIO/issues)
 
-API is up-to-date as of *02 November 2023*.
+API is up-to-date as of *03 November 2023*.
 
 * PyPl - https://pypi.org/project/aaio/
 * Github - https://github.com/kewldan/AAIO
 * Docs - https://kewldan.vercel.app/projects/aaio
+* Demo - https://t.me/aaio_demo_bot
 * Requirements: Python >= 3.7
 * Added to [AAIO SDKs](https://wiki.aaio.io/priem-platezhei/gotovye-cms-moduli-i-sdk/python-3-sdk)
 
