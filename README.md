@@ -25,7 +25,7 @@ aaio.io
 return a pydantic's models for each response. Please write about all problems related to the library
 to [issues](https://github.com/kewldan/AAIO/issues)
 
-API is up-to-date as of *03 November 2023*.
+API is up-to-date as of *14 December 2023*.
 
 * PyPl - https://pypi.org/project/aaio/
 * Github - https://github.com/kewldan/AAIO

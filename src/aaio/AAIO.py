@@ -13,6 +13,12 @@ from aaio.types.payoff_methods import PayoffMethods
 from aaio.types.payoff_rates import PayoffRates
 
 
+async def create_invoice(payment_url: str):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(payment_url) as request:
+            return request.url
+
+
 class AAIO:
     """
     AAIO client for API interaction
