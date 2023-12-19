@@ -1,4 +1,9 @@
-from typing import Literal, Optional
+from typing import Optional, List
+
+try:
+    from typing import Literal
+except ImportError:
+    from typing_extensions import Literal
 
 from pydantic import BaseModel
 
@@ -21,7 +26,7 @@ class PaymentInfo(BaseModel):
     date: str
     expired_date: str
     complete_date: Optional[str] = None
-    us_vars: list[str]
+    us_vars: List[str]
 
     def is_success(self) -> bool:
         return self.status == 'success'

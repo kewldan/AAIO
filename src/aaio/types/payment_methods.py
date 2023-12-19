@@ -1,3 +1,5 @@
+from typing import Dict
+
 from pydantic import BaseModel
 
 
@@ -16,4 +18,4 @@ class PaymentMethod(BaseModel):
 
 
 class PaymentMethods(BaseModel):
-    list: dict[str, PaymentMethod]
+    list: Dict[str, PaymentMethod]

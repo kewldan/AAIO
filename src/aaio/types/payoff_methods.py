@@ -1,3 +1,5 @@
+from typing import Dict
+
 from pydantic import BaseModel
 
 
@@ -10,4 +12,4 @@ class PayoffMethod(BaseModel):
 
 
 class PayoffMethods(BaseModel):
-    list: dict[str, PayoffMethod]
+    list: Dict[str, PayoffMethod]

@@ -1,5 +1,5 @@
 import hashlib
-from typing import Optional
+from typing import Optional, List
 from urllib.parse import urlencode
 
 import aiohttp
@@ -112,7 +112,7 @@ class AAIO:
 
         return f'https://aaio.io/merchant/pay?' + urlencode({k: v for k, v in params.items() if v is not None})
 
-    async def get_ips(self) -> list[str]:
+    async def get_ips(self) -> List[str]:
         response = await self.__create_request('/api/public/ips')
 
         return response['list']
