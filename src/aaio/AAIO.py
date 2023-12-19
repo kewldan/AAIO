@@ -269,7 +269,7 @@ class AAIO:
         async with aiohttp.ClientSession(self._base_url) as session:
             async with session.post(uri, headers=headers,
                                     data={k: v for k, v in params.items() if v is not None}) as r:
-                response = await r.json()
+                response = await r.json(content_type=None)
                 if response['type'] == 'success':
                     return response
                 else:
