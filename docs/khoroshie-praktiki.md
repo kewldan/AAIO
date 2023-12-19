@@ -4,7 +4,7 @@
 
 Очень важно генерировать ID заказа случайно, не привязывать его к данным пользователя. Для этого можно использовать UUID
 
-<pre class="language-python" data-title="На практике" data-line-numbers data-full-width="true"><code class="lang-python"><strong>order_id = str(uuid.uuid4())
+<pre class="language-python" data-title="На практике" data-line-numbers data-full-width="false"><code class="lang-python"><strong>order_id = str(uuid.uuid4())
 </strong><strong># Здесь должна быть запись заказа в БД, где можно указать и идентификатор пользователя
 </strong>payment_url: str = client.create_payment(299, order_id) # Заметьте, что метод не асинхронный!
 </code></pre>
