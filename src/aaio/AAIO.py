@@ -1,4 +1,5 @@
 import hashlib
+from typing import Optional
 from urllib.parse import urlencode
 
 import aiohttp
@@ -245,7 +246,7 @@ class AAIO:
 
         return PaymentMethods(**response)
 
-    async def __create_request(self, uri: str, params: dict = None) -> dict | None:
+    async def __create_request(self, uri: str, params: dict = None) -> Optional[dict]:
         """
         Creates a request to base URL and adds URI
 
