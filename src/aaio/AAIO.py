@@ -29,7 +29,7 @@ class AAIO:
     """
 
     def __init__(self, merchant_id: str, secret: str, api_key: str, default_currency: str = 'RUB',
-                 base_url: str = 'https://aaio.io'):
+                 base_url: str = 'https://aaio.so'):
         """
         Creates instance of one AAIO merchant API client
 
