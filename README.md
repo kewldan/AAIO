@@ -2,9 +2,11 @@
 
 <div align="center">
 
-<a href="https://aaio.io/" target="_blank">
-	<img alt="AAIO Badge" src="https://aaio.io/assets/svg/banners/big/dark-2.svg" title="Aaio - Сервис по приему онлайн платежей">
-</a>
+[//]: # (<a href="https://aaio.io/" target="_blank">)
+
+[//]: # (	<img alt="AAIO Badge" src="https://aaio.io/assets/svg/banners/big/dark-2.svg" title="Aaio - Сервис по приему онлайн платежей">)
+
+[//]: # (</a>)
 
 [![kewldan - AAIO](https://img.shields.io/static/v1?label=kewldan&message=AAIO&color=blue&logo=github)](https://github.com/kewldan/AAIO "Go to GitHub repo")
 [![GitHub release](https://img.shields.io/github/release/kewldan/AAIO?include_prereleases=&sort=semver&color=blue)](https://github.com/kewldan/AAIO/releases/)
