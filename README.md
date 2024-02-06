@@ -2,11 +2,9 @@
 
 <div align="center">
 
-[//]: # (<a href="https://aaio.io/" target="_blank">)
-
-[//]: # (	<img alt="AAIO Badge" src="https://aaio.io/assets/svg/banners/big/dark-2.svg" title="Aaio - Сервис по приему онлайн платежей">)
-
-[//]: # (</a>)
+<a href="https://aaio.so/" target="_blank">
+	<img alt="AAIO Badge" src="https://aaio.so/assets/svg/banners/big/dark-2.svg" title="Aaio - Сервис по приему онлайн платежей">
+</a>
 
 [![kewldan - AAIO](https://img.shields.io/static/v1?label=kewldan&message=AAIO&color=blue&logo=github)](https://github.com/kewldan/AAIO "Go to GitHub repo")
 [![GitHub release](https://img.shields.io/github/release/kewldan/AAIO?include_prereleases=&sort=semver&color=blue)](https://github.com/kewldan/AAIO/releases/)
@@ -15,15 +13,15 @@
 [![Upload Python Package](https://github.com/kewldan/AAIO/actions/workflows/python-publish.yml/badge.svg)](https://github.com/kewldan/AAIO/actions/workflows/python-publish.yml)
 [![issues - AAIO](https://img.shields.io/github/issues/kewldan/AAIO)](https://github.com/kewldan/AAIO/issues)
 
-[AAIO Official documentation](https://wiki.aaio.io/)
+[AAIO Official documentation](https://wiki.aaio.so/)
 
 </div>
 
 ## About
 
-This library is a wrapper for the https://aaio.io API **from enthusiasts**. All methods are described and all types are
+This library is a wrapper for the https://aaio.so API **from enthusiasts**. All methods are described and all types are
 **explicitly** defined. Methods that create requests to
-aaio.io
+aaio.so
 return a pydantic's models for each response. Please write about all problems related to the library
 to [issues](https://github.com/kewldan/AAIO/issues)
 
@@ -34,7 +32,7 @@ API is up-to-date as of *19 December 2023*.
 * Docs - https://kewldan.vercel.app/projects/aaio
 * Demo - https://t.me/aaio_demo_bot
 * Requirements: Python >= 3.7
-* Added to [AAIO SDKs](https://wiki.aaio.io/priem-platezhei/gotovye-cms-moduli-i-sdk/python-3-sdk)
+* Added to [AAIO SDKs](https://wiki.aaio.so/priem-platezhei/gotovye-cms-moduli-i-sdk/python-3-sdk)
 
 ### Features
 
@@ -81,7 +79,7 @@ from aaio import AAIO
 
 async def main():
   client = AAIO('MERCHANT ID', 'SECRET KEY', 'API KEY')
-  payment_url = client.create_payment(100, 'my_order_id', 'My order description', 'qiwi', 'support@aaio.io',
+  payment_url = client.create_payment(100, 'my_order_id', 'My order description', 'qiwi', 'support@aaio.so',
                                       'referral code', currency='USD',
                                       language='en')
   print(payment_url)  # Prints payment url for customer

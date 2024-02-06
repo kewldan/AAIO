@@ -8,4 +8,4 @@ info = await client.get_payoff_info(payoff_id)
 print(info.status) # in_process, cancel, success
 ```
 
-Для остальных параметров запроса прошу смотреть официальную документацию AAIO по ссылке [https://wiki.aaio.io/api/informaciya-o-zayavke-na-vyvod-sredstv](https://wiki.aaio.io/api/informaciya-o-zayavke-na-vyvod-sredstv)
+Для остальных параметров запроса прошу смотреть официальную документацию AAIO по ссылке [https://wiki.aaio.so/api/informaciya-o-zayavke-na-vyvod-sredstv](https://wiki.aaio.so/api/informaciya-o-zayavke-na-vyvod-sredstv)

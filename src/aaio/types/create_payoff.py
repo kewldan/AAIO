@@ -21,3 +21,12 @@ class CreatePayoff(BaseModel):
     commission: float
     commission_type: int
     status: Literal['in_process', 'cancel', 'success']
+
+    def is_success(self) -> bool:
+        return self.status == 'success'
+
+    def is_in_process(self) -> bool:
+        return self.status == 'in_process'
+
+    def is_cancelled(self) -> bool:
+        return self.status == 'cancel'

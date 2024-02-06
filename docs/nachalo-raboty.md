@@ -16,6 +16,6 @@ client = aaio.AAIO(merchant_id, secret_key, api_key)
 
 **api\_key** - API ключ, его можно указать как `''`, если вы не используете общие методы
 
-[https://aaio.io/cabinet/api](https://aaio.io/cabinet/api)
+[https://aaio.so/cabinet/api](https://aaio.so/cabinet/api)
 
 <figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>

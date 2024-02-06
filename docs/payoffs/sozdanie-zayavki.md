@@ -7,4 +7,4 @@
 </strong><strong>await client.create_payoff(method, amount, wallet, payoff_id)
 </strong></code></pre>
 
-Для остальных параметров запроса прошу смотреть официальную документацию AAIO по ссылке [https://wiki.aaio.io/api/vyvod-sredstv](https://wiki.aaio.io/api/vyvod-sredstv)
+Для остальных параметров запроса прошу смотреть официальную документацию AAIO по ссылке [https://wiki.aaio.so/api/vyvod-sredstv](https://wiki.aaio.so/api/vyvod-sredstv)

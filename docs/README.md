@@ -1,8 +1,8 @@
 # Главная
 
-[![](https://aaio.io/assets/svg/banners/big/dark-2.svg)](https://aaio.io/)
+[![](https://aaio.so/assets/svg/banners/big/dark-2.svg)](https://aaio.so/)
 
-[AAIO Official documentat](https://wiki.aaio.io/)
+[AAIO Official documentat](https://wiki.aaio.so/)
 
 ## О библиотеке
 
@@ -17,7 +17,7 @@ Python AAIO - библиотека, позволяющая удобно авто
 * Docs - https://kewldan.vercel.app/projects/aaio
 * Демо бот в Telegram - https://t.me/aaio\_demo\_bot
 * Внешние зависимости: Python >= 3.7
-* Добавлена в [AAIO SDKs](https://wiki.aaio.io/priem-platezhei/gotovye-cms-moduli-i-sdk/python-3-sdk)
+* Добавлена в [AAIO SDKs](https://wiki.aaio.so/priem-platezhei/gotovye-cms-moduli-i-sdk/python-3-sdk)
 
 ## Установка
 

@@ -8,4 +8,4 @@ payment_url: str = client.create_payment(amount, order_id)
 
 Прошу сразу посетить [khoroshie-praktiki.md](../khoroshie-praktiki.md "mention") для полезной информации
 
-Для остальных параметров запроса прошу смотреть оффициальную документацию AAIO по ссылке [https://wiki.aaio.io/priem-platezhei/sozdanie-zakaza](https://wiki.aaio.io/priem-platezhei/sozdanie-zakaza)
+Для остальных параметров запроса прошу смотреть оффициальную документацию AAIO по ссылке [https://wiki.aaio.so/priem-platezhei/sozdanie-zakaza](https://wiki.aaio.so/priem-platezhei/sozdanie-zakaza)

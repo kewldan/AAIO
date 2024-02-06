@@ -12,6 +12,7 @@ from aaio.types.payment_methods import PaymentMethods
 from aaio.types.payoff_info import PayoffInfo
 from aaio.types.payoff_methods import PayoffMethods
 from aaio.types.payoff_rates import PayoffRates
+from aaio.types.payoff_sbp_banks import PayoffSbpBanks
 
 
 async def create_invoice(payment_url: str):
@@ -25,7 +26,7 @@ class AAIO:
     AAIO client for API interaction
     Session will be automatically closed
 
-    API for https://aaio.io/
+    API for https://aaio.so/
     """
 
     def __init__(self, merchant_id: str, secret: str, api_key: str, default_currency: str = 'RUB',
@@ -34,9 +35,9 @@ class AAIO:
         Creates instance of one AAIO merchant API client
 
         Args:
-            merchant_id: Merchant ID from https://aaio.io/cabinet
-            secret: 1st secret key from https://aaio.io/cabinet
-            api_key: API key from https://aaio.io/cabinet/api
+            merchant_id: Merchant ID from https://aaio.so/cabinet
+            secret: 1st secret key from https://aaio.so/cabinet
+            api_key: API key from https://aaio.so/cabinet/api
             default_currency: If not set - RUB, but can be overwritten for each request (Optional)
             base_url: Base URL for requests (Optional)
         """
@@ -50,7 +51,7 @@ class AAIO:
     def __generate_sign(self, amount: float, order_id: str, currency: str) -> str:
         """
         Generates sign for payment creation
-        See https://wiki.aaio.io/priem-platezhei/sozdanie-zakaza/metodika-formirovaniya-podpisi
+        See https://wiki.aaio.so/priem-platezhei/sozdanie-zakaza/metodika-formirovaniya-podpisi
 
         Args:
             amount: Amount in your currency
@@ -77,7 +78,7 @@ class AAIO:
                        language: str = 'ru') -> str:
         """
         Creates payment URL (Not a request)
-        See https://wiki.aaio.io/priem-platezhei/sozdanie-zakaza for more detailed information
+        See https://wiki.aaio.so/priem-platezhei/sozdanie-zakaza for more detailed information
 
         Args:
             amount: Payment amount
@@ -120,7 +121,7 @@ class AAIO:
     async def get_payment_info(self, order_id: str) -> PaymentInfo:
         """
         Creates a request for get payment information
-        See https://wiki.aaio.io/api/informaciya-o-zakaze
+        See https://wiki.aaio.so/api/informaciya-o-zakaze
 
         Args:
             order_id: Your order ID
@@ -141,7 +142,7 @@ class AAIO:
     async def get_balances(self) -> Balance:
         """
         Creates a request for get balances of user
-        See https://wiki.aaio.io/api/poluchenie-balansa
+        See https://wiki.aaio.so/api/poluchenie-balansa
 
         Returns: Model from response JSON
         """
@@ -154,7 +155,7 @@ class AAIO:
                             commission_type: int = 0) -> CreatePayoff:
         """
         Creates a request for payoff creating
-        See https://wiki.aaio.io/api/vyvod-sredstv
+        See https://wiki.aaio.so/api/vyvod-sredstv
 
         Args:
             method: Payoff method
@@ -179,10 +180,20 @@ class AAIO:
 
         return CreatePayoff(**response)
 
+    async def get_payoff_sbp_banks(self) -> PayoffSbpBanks:
+        """
+        Returns a list of available banks for payoff
+        See https://wiki.aaio.so/api/banki-dlya-vyvoda-sredstv-na-sbp
+        Returns: list of banks
+        """
+        response = await self.__create_request('/api/sbp-banks-payoff')
+
+        return PayoffSbpBanks(**response)
+
     async def get_payoff_info(self, payoff_id: str = None, aaio_id: str = None) -> PayoffInfo:
         """
         Creates a request for get payoff information
-        See https://wiki.aaio.io/api/informaciya-o-zayavke-na-vyvod-sredstv
+        See https://wiki.aaio.so/api/informaciya-o-zayavke-na-vyvod-sredstv
 
         One id is required!
 
@@ -206,7 +217,7 @@ class AAIO:
     async def get_payoff_rates(self) -> PayoffRates:
         """
         Creates a request for get rates for payoff
-        See https://wiki.aaio.io/api/kurs-valyut-pri-vyvode-sredstv
+        See https://wiki.aaio.so/api/kurs-valyut-pri-vyvode-sredstv
 
         Returns: Model from response JSON
 
@@ -219,7 +230,7 @@ class AAIO:
     async def get_payoff_methods(self) -> PayoffMethods:
         """
         Creates a request for get available payoff methods
-        See https://wiki.aaio.io/api/dostupnye-metody-dlya-vyvoda-sredstv
+        See https://wiki.aaio.so/api/dostupnye-metody-dlya-vyvoda-sredstv
 
         Returns: Model from response JSON
 
@@ -232,7 +243,7 @@ class AAIO:
     async def get_payment_methods(self) -> PaymentMethods:
         """
         Creates a request for get available payment methods
-        See https://wiki.aaio.io/api/dostupnye-metody-dlya-sozdaniya-zakaza
+        See https://wiki.aaio.so/api/dostupnye-metody-dlya-sozdaniya-zakaza
 
         Returns: Model from response JSON
 
