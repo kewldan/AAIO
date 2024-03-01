@@ -9,16 +9,23 @@ from aaio.types.balance import Balance
 from aaio.types.create_payoff import CreatePayoff
 from aaio.types.payment_info import PaymentInfo
 from aaio.types.payment_methods import PaymentMethods
+from aaio.types.payment_webhook import PaymentWebhookData
 from aaio.types.payoff_info import PayoffInfo
 from aaio.types.payoff_methods import PayoffMethods
 from aaio.types.payoff_rates import PayoffRates
 from aaio.types.payoff_sbp_banks import PayoffSbpBanks
+from aaio.types.payoff_webhook import PayoffWebhookData
 
 
 async def create_invoice(payment_url: str):
     async with aiohttp.ClientSession() as session:
         async with session.get(payment_url) as request:
             return request.url
+
+
+def is_valid_payoff_webhook(data: PayoffWebhookData, secret_key: str) -> bool:
+    return hashlib.sha256(
+        f'{data.id}:{secret_key}:{data.amount_down}'.encode()).hexdigest() == data.sign
 
 
 class AAIO:
@@ -29,14 +36,15 @@ class AAIO:
     API for https://aaio.so/
     """
 
-    def __init__(self, merchant_id: str, secret: str, api_key: str, default_currency: str = 'RUB',
+    def __init__(self, merchant_id: str, secret_1: str, secret_2: str, api_key: str, default_currency: str = 'RUB',
                  base_url: str = 'https://aaio.so'):
         """
         Creates instance of one AAIO merchant API client
 
         Args:
             merchant_id: Merchant ID from https://aaio.so/cabinet
-            secret: 1st secret key from https://aaio.so/cabinet
+            secret_1: 1st secret key from https://aaio.so/cabinet
+            secret_2: 2nd secret key from https://aaio.so/cabinet
             api_key: API key from https://aaio.so/cabinet/api
             default_currency: If not set - RUB, but can be overwritten for each request (Optional)
             base_url: Base URL for requests (Optional)
@@ -45,7 +53,8 @@ class AAIO:
         self._default_currency = default_currency
         self._merchant_id = merchant_id
         self._api_key = api_key
-        self._secret = secret
+        self._secret_1 = secret_1
+        self._secret_2 = secret_2
         self._base_url = base_url
 
     def __generate_sign(self, amount: float, order_id: str, currency: str) -> str:
@@ -66,7 +75,7 @@ class AAIO:
             self._merchant_id,
             str(amount),
             currency,
-            self._secret,
+            self._secret_1,
             order_id
         ])
         sign = hashlib.sha256(params.encode('utf-8')).hexdigest()
@@ -285,3 +294,7 @@ class AAIO:
                     return response
                 else:
                     raise AAIOBadRequest(response['code'], response['message'])
+
+    def is_valid_payment_webhook(self, data: PaymentWebhookData) -> bool:
+        return hashlib.sha256(
+            f'{self._merchant_id}:{data.amount}:{self._secret_2}:{data.order_id}'.encode()).hexdigest() == data.sign

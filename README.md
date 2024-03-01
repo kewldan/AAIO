@@ -25,7 +25,7 @@ aaio.so
 return a pydantic's models for each response. Please write about all problems related to the library
 to [issues](https://github.com/kewldan/AAIO/issues)
 
-API is up-to-date as of *06 February 2024*.
+API is up-to-date as of *01 March 2024*.
 
 * PyPl - https://pypi.org/project/aaio/
 * Github - https://github.com/kewldan/AAIO
@@ -78,11 +78,11 @@ from aaio import AAIO
 
 
 async def main():
-  client = AAIO('MERCHANT ID', 'SECRET KEY', 'API KEY')
-  payment_url = client.create_payment(100, 'my_order_id', 'My order description', 'qiwi', 'support@aaio.so',
-                                      'referral code', currency='USD',
-                                      language='en')
-  print(payment_url)  # Prints payment url for customer
+    client = AAIO('MERCHANT ID', 'SECRET KEY', 'API KEY')
+    payment_url = client.create_payment(100, 'my_order_id', 'My order description', 'qiwi', 'support@aaio.so',
+                                        'referral code', currency='USD',
+                                        language='en')
+    print(payment_url)  # Prints payment url for customer
 
 
 asyncio.run(main())
@@ -97,9 +97,9 @@ from aaio import AAIO
 
 
 async def main():
-  client = AAIO('MERCHANT ID', 'SECRET KEY', 'API KEY')
-  payoff = await client.create_payoff('qiwi', 100.35, '79998887766', 'my_payoff_id')
-  print(payoff.status)  # in_progress
+    client = AAIO('MERCHANT ID', 'SECRET KEY', 'API KEY')
+    payoff = await client.create_payoff('qiwi', 100.35, '79998887766', 'my_payoff_id')
+    print(payoff.status)  # in_progress
 
 
 asyncio.run(main())
@@ -107,8 +107,8 @@ asyncio.run(main())
 
 ## Contact
 
-E-Mail - kewldanil1@gmail.com
-Telegram - [@kewldan](https://t.me/kewldan)
+* E-Mail - kewldanil1@gmail.com
+* Telegram - [@kewldan](https://t.me/kewldan)
 
 ## License
 
