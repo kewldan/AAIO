@@ -79,6 +79,13 @@ from aaio import AAIO
 
 async def main():
     client = AAIO('MERCHANT ID', 'SECRET KEY', 'API KEY')
+    payment_url = await client.get_pay_url(100, 'my_order_id', 'My order description', 'qiwi', 'support@aaio.so',
+                                        'referral code', currency='USD',
+                                        language='en')
+    print(payment_url['url'])  # Prints payment url for customer
+    
+    # its recomended methon, but you can use this
+    
     payment_url = client.create_payment(100, 'my_order_id', 'My order description', 'qiwi', 'support@aaio.so',
                                         'referral code', currency='USD',
                                         language='en')
