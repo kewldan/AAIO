@@ -1,31 +1,13 @@
 import hashlib
-from typing import Optional, List
+import logging
+from typing import List, Optional
 from urllib.parse import urlencode
 
 import aiohttp
 
-from aaio.exceptions.aaio_bad_request import AAIOBadRequest
-from aaio.types.balance import Balance
-from aaio.types.create_payoff import CreatePayoff
-from aaio.types.payment_info import PaymentInfo
-from aaio.types.payment_methods import PaymentMethods
-from aaio.types.payment_webhook import PaymentWebhookData
-from aaio.types.payoff_info import PayoffInfo
-from aaio.types.payoff_methods import PayoffMethods
-from aaio.types.payoff_rates import PayoffRates
-from aaio.types.payoff_sbp_banks import PayoffSbpBanks
-from aaio.types.payoff_webhook import PayoffWebhookData
-
-
-async def create_invoice(payment_url: str):
-    async with aiohttp.ClientSession() as session:
-        async with session.get(payment_url) as request:
-            return request.url
-
-
-def is_valid_payoff_webhook(data: PayoffWebhookData, secret_key: str) -> bool:
-    return hashlib.sha256(
-        f'{data.id}:{secret_key}:{data.amount_down}'.encode()).hexdigest() == data.sign
+from .exceptions import AAIOBadRequest
+from .models import PaymentInfo, Balance, CreatePayoff, PayoffSbpBanks, PayoffInfo, PayoffRates, PayoffMethods, \
+    PaymentMethods, PaymentWebhookData
 
 
 class AAIO:
@@ -81,12 +63,30 @@ class AAIO:
         sign = hashlib.sha256(params.encode('utf-8')).hexdigest()
         return sign
 
+    def __generate_payment_params(self, amount: float, order_id: str, description: str = None, method: str = None,
+                                  email: str = None,
+                                  referral: str = None, us_key: str = None, currency: str = None,
+                                  language: str = 'ru'):
+        return {
+            'merchant_id': self._merchant_id,
+            'amount': amount,
+            'currency': currency,
+            'order_id': order_id,
+            'sign': self.__generate_sign(amount, order_id, currency or self._default_currency),
+            'desc': description,
+            'lang': language,
+            'method': method,
+            'email': email,
+            'referral': referral,
+            'us_key': us_key
+        }
+
     def create_payment(self, amount: float, order_id: str, description: str = None, method: str = None,
                        email: str = None,
                        referral: str = None, us_key: str = None, currency: str = None,
                        language: str = 'ru') -> str:
         """
-        Creates payment URL (Not a request)
+        Generates payment URL (DEPRECATED)
         See https://wiki.aaio.so/priem-platezhei/sozdanie-zakaza for more detailed information
 
         Args:
@@ -104,23 +104,41 @@ class AAIO:
 
         """
 
-        if not currency:
-            currency = self._default_currency
-        params = {
-            'merchant_id': self._merchant_id,
-            'amount': amount,
-            'currency': currency,
-            'order_id': order_id,
-            'sign': self.__generate_sign(amount, order_id, currency),
-            'desc': description,
-            'lang': language,
-            'method': method,
-            'email': email,
-            'referral': referral,
-            'us_key': us_key
-        }
+        logging.warning('This method is deprecated, consider using create_pay method instead')
+
+        params = self.__generate_payment_params(amount, order_id, description, method, email, referral, us_key,
+                                                currency, language)
 
         return f'{self._base_url}/merchant/pay?' + urlencode({k: v for k, v in params.items() if v is not None})
+
+    async def get_pay_url(self, amount: float, order_id: str, description: str = None, method: str = None,
+                          email: str = None,
+                          referral: str = None, us_key: str = None, currency: str = None,
+                          language: str = 'ru') -> dict:
+        """
+        Creates payment URL
+        See https://wiki.aaio.so/priem-platezhei/sozdanie-zakaza-zaprosom-rekomenduem for more detailed information
+
+        Args:
+            amount: Payment amount
+            order_id: Your order id
+            description: Payment description (Optional)
+            method: Payment method, can be overwritten by customer (Optional)
+            email: Client E-Mail (Optional)
+            referral: Referral code for cookies (Optional)
+            us_key: Custom parameters (Optional)
+            currency: Payment currency, default - default client currency (Optional)
+            language: Page language (Optional)
+
+        Returns: dict {"type": "...", "url": "https://......"}
+        """
+
+        params = self.__generate_payment_params(amount, order_id, description, method, email, referral, us_key,
+                                                currency, language)
+
+        response = await self.__create_request('/merchant/get_pay_url', params)
+
+        return response
 
     async def get_ips(self) -> List[str]:
         response = await self.__create_request('/api/public/ips')
@@ -283,6 +301,7 @@ class AAIO:
 
         headers = {
             'Accept': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded',
             'X-Api-Key': self._api_key
         }
 

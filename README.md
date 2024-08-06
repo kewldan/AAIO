@@ -19,13 +19,13 @@
 
 ## About
 
-This library is a wrapper for the https://aaio.so API **from enthusiasts**. All methods are described and all types are
+This library is a wrapper for the https://aaio.so API **from enthusiast**. All methods are described and all types are
 **explicitly** defined. Methods that create requests to
 aaio.so
 return a pydantic's models for each response. Please write about all problems related to the library
 to [issues](https://github.com/kewldan/AAIO/issues)
 
-API is up-to-date as of *01 March 2024*.
+API is up-to-date as of *07 August 2024*.
 
 * PyPl - https://pypi.org/project/aaio/
 * Github - https://github.com/kewldan/AAIO
@@ -79,10 +79,21 @@ from aaio import AAIO
 
 async def main():
     client = AAIO('MERCHANT ID', 'SECRET KEY', 'API KEY')
+    
+    
+    # New way to create payments
+    payment_url = await client.get_pay_url(100, 'my_order_id', 'My order description', 'qiwi', 'support@aaio.so',
+                                        'referral code', currency='USD',
+                                        language='en')
+    print(payment_url['url'])  # Prints payment url for customer
+    
+    
+    # DEPRECATED METHOD
     payment_url = client.create_payment(100, 'my_order_id', 'My order description', 'qiwi', 'support@aaio.so',
                                         'referral code', currency='USD',
                                         language='en')
-    print(payment_url)  # Prints payment url for customer
+    print(payment_url)
+    ###################
 
 
 asyncio.run(main())
