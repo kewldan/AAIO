@@ -18,7 +18,8 @@ class AAIO:
     API for https://aaio.so/
     """
 
-    def __init__(self, merchant_id: str, secret_1: str, secret_2: str, api_key: str, default_currency: str = 'RUB',
+    def __init__(self, merchant_id: str, secret_1: str, secret_2: str | None = None, api_key: str | None = None,
+                 default_currency: str = 'RUB',
                  base_url: str = 'https://aaio.so'):
         """
         Creates instance of one AAIO merchant API client
@@ -67,12 +68,14 @@ class AAIO:
                                   email: str = None,
                                   referral: str = None, us_key: str = None, currency: str = None,
                                   language: str = 'ru'):
+        currency = currency or self._default_currency
+
         return {
             'merchant_id': self._merchant_id,
             'amount': amount,
             'currency': currency,
             'order_id': order_id,
-            'sign': self.__generate_sign(amount, order_id, currency or self._default_currency),
+            'sign': self.__generate_sign(amount, order_id, currency),
             'desc': description,
             'lang': language,
             'method': method,
@@ -114,7 +117,7 @@ class AAIO:
     async def get_pay_url(self, amount: float, order_id: str, description: str = None, method: str = None,
                           email: str = None,
                           referral: str = None, us_key: str = None, currency: str = None,
-                          language: str = 'ru') -> dict:
+                          language: str = 'ru') -> str:
         """
         Creates payment URL
         See https://wiki.aaio.so/priem-platezhei/sozdanie-zakaza-zaprosom-rekomenduem for more detailed information
@@ -138,7 +141,7 @@ class AAIO:
 
         response = await self.__create_request('/merchant/get_pay_url', params)
 
-        return response
+        return response['url']
 
     async def get_ips(self) -> List[str]:
         response = await self.__create_request('/api/public/ips')
@@ -157,6 +160,9 @@ class AAIO:
 
         """
 
+        if not self._api_key:
+            raise ValueError('API key is required for this method')
+
         params = {
             'merchant_id': self._merchant_id,
             'order_id': order_id
@@ -173,6 +179,9 @@ class AAIO:
 
         Returns: Model from response JSON
         """
+
+        if not self._api_key:
+            raise ValueError('API key is required for this method')
 
         response = await self.__create_request('/api/balance')
 
@@ -195,6 +204,9 @@ class AAIO:
 
         """
 
+        if not self._api_key:
+            raise ValueError('API key is required for this method')
+
         params = {
             'my_id': payoff_id,
             'method': method,
@@ -213,6 +225,10 @@ class AAIO:
         See https://wiki.aaio.so/api/banki-dlya-vyvoda-sredstv-na-sbp
         Returns: list of banks
         """
+
+        if not self._api_key:
+            raise ValueError('API key is required for this method')
+
         response = await self.__create_request('/api/sbp-banks-payoff')
 
         return PayoffSbpBanks(**response)
@@ -232,6 +248,9 @@ class AAIO:
 
         """
 
+        if not self._api_key:
+            raise ValueError('API key is required for this method')
+
         params = {
             'my_id': payoff_id,
             'id': aaio_id
@@ -250,6 +269,9 @@ class AAIO:
 
         """
 
+        if not self._api_key:
+            raise ValueError('API key is required for this method')
+
         response = await self.__create_request('/api/rates-payoff')
 
         return PayoffRates(**response)
@@ -263,6 +285,9 @@ class AAIO:
 
         """
 
+        if not self._api_key:
+            raise ValueError('API key is required for this method')
+
         response = await self.__create_request('/api/methods-payoff')
 
         return PayoffMethods(**response)
@@ -275,6 +300,9 @@ class AAIO:
         Returns: Model from response JSON
 
         """
+
+        if not self._api_key:
+            raise ValueError('API key is required for this method')
 
         params = {
             'merchant_id': self._merchant_id
@@ -301,9 +329,11 @@ class AAIO:
 
         headers = {
             'Accept': 'application/json',
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-Api-Key': self._api_key
+            'Content-Type': 'application/x-www-form-urlencoded'
         }
+
+        if self._api_key:
+            headers['X-Api-Key'] = self._api_key
 
         async with aiohttp.ClientSession(self._base_url) as session:
             async with session.post(uri, headers=headers,
@@ -315,5 +345,9 @@ class AAIO:
                     raise AAIOBadRequest(response['code'], response['message'])
 
     def is_valid_payment_webhook(self, data: PaymentWebhookData) -> bool:
+
+        if self._secret_2 is None:
+            raise ValueError('2nd secret key is required for webhook validation')
+
         return hashlib.sha256(
             f'{self._merchant_id}:{data.amount}:{self._secret_2}:{data.order_id}'.encode()).hexdigest() == data.sign
