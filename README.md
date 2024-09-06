@@ -25,7 +25,7 @@ aaio.so
 return a pydantic's models for each response. Please write about all problems related to the library
 to [issues](https://github.com/kewldan/AAIO/issues)
 
-API is up-to-date as of *16 August 2024*.
+API is up-to-date as of *06 September 2024*.
 
 * PyPl - https://pypi.org/project/aaio/
 * Github - https://github.com/kewldan/AAIO
