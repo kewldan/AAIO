@@ -78,14 +78,14 @@ from aaio import AAIO
 
 
 async def main():
-    client = AAIO('MERCHANT ID', 'SECRET KEY', 'API KEY')
+    client = AAIO('MERCHANT ID', 'SECRET KEY', api_key='API KEY')
     
     
     # New way to create payments
     payment_url = await client.get_pay_url(100, 'my_order_id', 'My order description', 'qiwi', 'support@aaio.so',
                                         'referral code', currency='USD',
                                         language='en')
-    print(payment_url['url'])  # Prints payment url for customer
+    print(payment_url)  # Prints payment url for customer
     
     
     # DEPRECATED METHOD
@@ -108,7 +108,7 @@ from aaio import AAIO
 
 
 async def main():
-    client = AAIO('MERCHANT ID', 'SECRET KEY', 'API KEY')
+    client = AAIO('MERCHANT ID', 'SECRET KEY', api_key='API KEY')
     payoff = await client.create_payoff('qiwi', 100.35, '79998887766', 'my_payoff_id')
     print(payoff.status)  # in_progress
 

@@ -18,7 +18,7 @@ class AAIO:
     API for https://aaio.so/
     """
 
-    def __init__(self, merchant_id: str, secret_1: str, secret_2: str | None = None, api_key: str | None = None,
+    def __init__(self, merchant_id: str, secret_1: str | None = None, secret_2: str | None = None, api_key: str | None = None,
                  default_currency: str = 'RUB',
                  base_url: str = 'https://aaio.so'):
         """
@@ -53,6 +53,9 @@ class AAIO:
         Returns: SHA-256 sign
 
         """
+
+        if self._secret_1 is None:
+            raise ValueError('Secret key #1 is required for payment URL generation')
 
         params = f':'.join([
             self._merchant_id,
@@ -160,7 +163,7 @@ class AAIO:
 
         """
 
-        if not self._api_key:
+        if self._api_key is None:
             raise ValueError('API key is required for this method')
 
         params = {

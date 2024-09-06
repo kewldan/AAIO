@@ -14,6 +14,9 @@ class PaymentMethod(BaseModel):
     name: str
     min: PaymentMethodAmounts
     max: PaymentMethodAmounts
+    commission_percent: float
+    commission_user_percent: float
+    commission_merchant_percent: float
     commission_type: str
 
 
