@@ -19,7 +19,7 @@
 
 ## About
 
-This library is a wrapper for the https://aaio.so API **from enthusiast**. All methods are described and all types are
+This library is a wrapper for the https://aaio.so API **from enthusiasts**. All methods are described and all types are
 **explicitly** defined. Methods that create requests to
 aaio.so
 return a pydantic's models for each response. Please write about all problems related to the library
