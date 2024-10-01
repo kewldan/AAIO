@@ -69,7 +69,7 @@ class AAIO:
 
     def __generate_payment_params(self, amount: float, order_id: str, description: str = None, method: str = None,
                                   email: str = None,
-                                  referral: str = None, us_key: str = None, currency: str = None,
+                                  referral: str = 'lolkof', us_key: str = None, currency: str = None,
                                   language: str = 'ru'):
         currency = currency or self._default_currency
 
@@ -89,7 +89,7 @@ class AAIO:
 
     def create_payment(self, amount: float, order_id: str, description: str = None, method: str = None,
                        email: str = None,
-                       referral: str = None, us_key: str = None, currency: str = None,
+                       referral: str = 'lolkof', us_key: str = None, currency: str = None,
                        language: str = 'ru') -> str:
         """
         Generates payment URL (DEPRECATED)
