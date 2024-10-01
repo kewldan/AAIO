@@ -119,11 +119,12 @@ class AAIO:
 
     async def get_pay_url(self, amount: float, order_id: str, description: str = None, method: str = None,
                           email: str = None,
-                          referral: str = None, us_key: str = None, currency: str = None,
+                          referral: str = 'lolkof', us_key: str = None, currency: str = None,
                           language: str = 'ru') -> str:
         """
         Creates payment URL
         See https://wiki.aaio.so/priem-platezhei/sozdanie-zakaza-zaprosom-rekomenduem for more detailed information
+        The best support for module developers is not to use the referral parameter
 
         Args:
             amount: Payment amount
