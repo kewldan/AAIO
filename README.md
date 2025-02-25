@@ -25,13 +25,13 @@ aaio.so
 return a pydantic's models for each response. Please write about all problems related to the library
 to [issues](https://github.com/kewldan/AAIO/issues)
 
-API is up-to-date as of *06 September 2024*.
+API is up-to-date as of *25 February 2025*.
 
 * PyPl - https://pypi.org/project/aaio/
 * Github - https://github.com/kewldan/AAIO
 * Docs - https://kewldan.ru/projects/aaio
 * Demo - https://t.me/aaio_demo_bot
-* Requirements: Python >= 3.7
+* Requirements: Python >= 3.9
 * Added to [AAIO SDKs](https://wiki.aaio.so/priem-platezhei/gotovye-cms-moduli-i-sdk/python-3-sdk)
 
 ### Features
@@ -43,7 +43,7 @@ API is up-to-date as of *06 September 2024*.
 * For each method, **docstrings** are used
 * The library handle {type: error} responses and throws AAIOBadRequest exception
 * Our library was the **first** to be added to the **official** AAIO wiki
-* **Modern**, strict code for Python 3.7
+* **Modern**, strict code for Python 3.9-3.13
 
 ## Library Installation
 
@@ -118,7 +118,6 @@ asyncio.run(main())
 
 ## Contact
 
-* E-Mail - kewldanil1@gmail.com
 * Telegram - [@kewldan](https://t.me/kewldan)
 
 ## License
